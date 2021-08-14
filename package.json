@@ -1,7 +1,7 @@
 {
-  "name": "pacakge_name",
-  "version": "1.0.0",
-  "description": "package_description",
+  "name": "discord.js-embed-pagination",
+  "version": "0.5",
+  "description": "A pagination utility for paginating embeds with discord.js.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suneettipirneni/node-typescript-template.git"
+    "url": "git+https://github.com/suneettipirneni/discord.js-embed-pagination"
   },
   "author": "Suneet Tipirneni",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/suneettipirneni/node-typescript-template/issues"
+    "url": "https://github.com/suneettipirneni/discord.js-embed-pagination/issues"
   },
-  "homepage": "https://github.com/suneettipirneni/node-typescript-template#readme",
+  "homepage": "https://github.com/suneettipirneni/discord.js-embed-pagination#readme",
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
@@ -31,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "babel-jest": "^27.0.6",
+    "discord.js": "^13.1.0",
     "eslint": "^7.30.0",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",

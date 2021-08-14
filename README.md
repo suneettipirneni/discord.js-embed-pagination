@@ -1,31 +1,91 @@
-# node-typescript-template
+# Discord.js Embed Pagination
 
-## Available Scripts
+An easy and highly customizable utility for paginating embeds in discord.js.
 
+<img src="docs/hero.png" width="700"/>
 
+## Features
 
-In the project directory, you can run:
+### Out of bounds button checking.
 
-### `npm start`
+Buttons become disabled when at the beginning or end of page list:
 
-An alias for `npm run start:dev`
+![bounds demo](/docs/bounds.gif)
 
-### `npm run start:dev`
+### Automatic Cleanup
 
-Starts and runs the development node server.
+Whenever the give timeout occurs, buttons are automatically removed as well as the current page footer.
 
-### `npm run start:prod`
+## Quick Start
 
-Starts and runs the production node server.
+Simply import the and use the utility function:
 
-### `npm test`
+```ts
+import { sendPaginatedEmbeds } from 'discord.js-embed-pagination';
 
-Starts and runs the unit test suite and shows results.
+sendPaginatedEmbeds(interaction, embeds);
+```
 
-### `npm run build`
+### Example
 
-Compiles the source files.
+```ts
+import { sendPaginatedEmbeds } from 'discord.js-embed-pagination';
 
-### `npm run lint`
+const titles = [
+    'Page 1',
+    'Page 2',
+    'Page 3',
+]
 
-Lints all of the source files.
+async run(interaction: CommandInteraction) {
+    const embeds = new titles.map(title => new MessageEmbed.setTitle(title));
+    await sendPaginatedEmbeds(interaction, embeds);
+}
+```
+
+## Customization
+
+You can provide options for how the embed is displayed
+
+```ts
+export type PageButtonOptions = {
+  /**
+   * The style of the button.
+   */
+  style?: InteractionButtonOptions['style'];
+
+  /**
+   * The text to be displayed on the next button (Defaults to 'Next').
+   */
+  nextLabel?: string;
+
+  /**
+   * The text to be displayed on the previous button. (Defaults to 'Previous').
+   */
+  previousLabel?: string;
+
+  /**
+   * The message to be alongside the paginated embeds.
+   */
+  content?: string;
+
+  /**
+   * Whether or not to show the current page in the footer of each embed (Defaults to being shown).
+   */
+  showPagePosition?: boolean;
+
+  /**
+   * How long the paginator should run for in ms. (Default is 30min)
+   */
+  time?: number;
+};
+```
+
+Like changing the color for example and the button labels:
+```ts
+await sendPaginatedEmbeds(interaction, embeds, { style: 'SECONDARY', previousLabel: 'Previous Page!', nextLabel: 'Next Page!' });
+```
+
+This results in something like this:
+
+<img src="docs/different-styles.png" width="700"/>
