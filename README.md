@@ -14,7 +14,7 @@ Buttons become disabled when at the beginning or end of page list:
 
 ### Automatic Cleanup
 
-Whenever the give timeout occurs, buttons are automatically removed as well as the current page footer.
+Whenever the given timeout occurs, buttons are automatically removed as well as the current page footer.
 
 ## Quick Start
 
@@ -81,7 +81,7 @@ export type PageButtonOptions = {
 };
 ```
 
-Like changing the color for example and the button labels:
+Like changing the color and label text for example:
 ```ts
 await sendPaginatedEmbeds(interaction, embeds, { style: 'SECONDARY', previousLabel: 'Previous Page!', nextLabel: 'Next Page!' });
 ```
