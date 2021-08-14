@@ -14,7 +14,7 @@ Buttons become disabled when at the beginning or end of page list:
 
 ### Automatic Cleanup
 
-Whenever the give timeout occurs, buttons are automatically removed as well as the current page footer.
+Whenever the given timeout occurs, buttons are automatically removed as well as the current page footer.
 
 ## Quick Start
 
