@@ -35,7 +35,7 @@ const titles = [
     'Page 1',
     'Page 2',
     'Page 3',
-]
+];
 
 async run(interaction: CommandInteraction) {
     const embeds = new titles.map(title => new MessageEmbed.setTitle(title));
