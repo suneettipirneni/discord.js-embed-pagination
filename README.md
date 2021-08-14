@@ -81,7 +81,7 @@ export type PageButtonOptions = {
 };
 ```
 
-Like changing the color for example and the button labels:
+Like changing the color and label text for example:
 ```ts
 await sendPaginatedEmbeds(interaction, embeds, { style: 'SECONDARY', previousLabel: 'Previous Page!', nextLabel: 'Next Page!' });
 ```
