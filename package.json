@@ -1,6 +1,6 @@
 {
   "name": "discord.js-embed-pagination",
-  "version": "0.5",
+  "version": "0.5.0",
   "description": "A pagination utility for paginating embeds with discord.js.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
