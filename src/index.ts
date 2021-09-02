@@ -10,7 +10,7 @@ import {
   MessageEmbed,
 } from 'discord.js';
 
-export type PageButtonOptions = {
+export interface PageButtonOptions {
   /**
    * The style of the button.
    */
@@ -45,7 +45,7 @@ export type PageButtonOptions = {
    * The label that displays in the page position footer.
    */
   pageLabel?: string;
-};
+}
 
 // Default to half an hour.
 const defaultTime = 1800000;

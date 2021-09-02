@@ -48,7 +48,7 @@ async run(interaction: CommandInteraction) {
 You can provide options for how the embed is displayed
 
 ```ts
-export type PageButtonOptions = {
+interface PageButtonOptions {
   /**
    * The style of the button.
    */
@@ -78,12 +78,22 @@ export type PageButtonOptions = {
    * How long the paginator should run for in ms. (Default is 30min)
    */
   time?: number;
-};
+
+  /**
+   * The label that displays in the page position footer.
+   */
+  pageLabel?: string;
+}
 ```
 
 Like changing the color and label text for example:
+
 ```ts
-await sendPaginatedEmbeds(interaction, embeds, { style: 'SECONDARY', previousLabel: 'Previous Page!', nextLabel: 'Next Page!' });
+await sendPaginatedEmbeds(interaction, embeds, {
+  style: 'SECONDARY',
+  previousLabel: 'Previous Page!',
+  nextLabel: 'Next Page!',
+});
 ```
 
 This results in something like this:
