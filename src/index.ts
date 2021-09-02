@@ -1,4 +1,14 @@
-import { CommandInteraction, ContextMenuInteraction, InteractionButtonOptions, InteractionReplyOptions, Message, MessageActionRow, MessageButton, MessageComponentInteraction, MessageEmbed } from 'discord.js';
+import {
+  CommandInteraction,
+  ContextMenuInteraction,
+  InteractionButtonOptions,
+  InteractionReplyOptions,
+  Message,
+  MessageActionRow,
+  MessageButton,
+  MessageComponentInteraction,
+  MessageEmbed,
+} from 'discord.js';
 
 export type PageButtonOptions = {
   /**
@@ -30,6 +40,11 @@ export type PageButtonOptions = {
    * How long the paginator should run for in ms. (Default is 30min)
    */
   time?: number;
+
+  /**
+   * The label that displays in the page position footer.
+   */
+  pageLabel?: string;
 };
 
 // Default to half an hour.
@@ -41,7 +56,10 @@ const defaultTime = 1800000;
  * @param embeds The array of embeds to use.
  */
 export async function sendPaginatedEmbeds(
-  interaction: CommandInteraction | MessageComponentInteraction | ContextMenuInteraction,
+  interaction:
+    | CommandInteraction
+    | MessageComponentInteraction
+    | ContextMenuInteraction,
   embeds: MessageEmbed[],
   options?: PageButtonOptions
 ): Promise<void> {
@@ -53,11 +71,10 @@ export async function sendPaginatedEmbeds(
   }
 
   const generateOptionsForPage = (page: number): InteractionReplyOptions => {
-
     const beginning = page === 0;
     const end = page === embeds.length - 1;
     const currentEmbed = embeds[page];
-    
+
     const buttonStyle = options?.style ?? 'PRIMARY';
 
     if (!currentEmbed) {
@@ -82,10 +99,15 @@ export async function sendPaginatedEmbeds(
       previousButton.disabled = true;
     }
 
-    const row = new MessageActionRow().addComponents([previousButton, nextButton]);
+    const row = new MessageActionRow().addComponents([
+      previousButton,
+      nextButton,
+    ]);
 
     if ((options?.showPagePosition ?? true) === true) {
-      currentEmbed.setFooter(`Page ${currentPage + 1} of ${embeds.length}`);
+      currentEmbed.setFooter(
+        `${options?.pageLabel ?? 'Page'} ${currentPage + 1} of ${embeds.length}`
+      );
     }
 
     return {
@@ -95,14 +117,24 @@ export async function sendPaginatedEmbeds(
   };
 
   const messageOptions = generateOptionsForPage(0);
-  const message = interaction.deferred ?
-    await interaction.followUp({ ...messageOptions, fetchReply: true, content: options?.content }) as Message :
-    await interaction.reply({ ...messageOptions, fetchReply: true, content: options?.content }) as Message;
+  const message = interaction.deferred
+    ? ((await interaction.followUp({
+        ...messageOptions,
+        fetchReply: true,
+        content: options?.content,
+      })) as Message)
+    : ((await interaction.reply({
+        ...messageOptions,
+        fetchReply: true,
+        content: options?.content,
+      })) as Message);
 
-  const collector = message.createMessageComponentCollector({ componentType: 'BUTTON', time: options?.time ?? defaultTime });
+  const collector = message.createMessageComponentCollector({
+    componentType: 'BUTTON',
+    time: options?.time ?? defaultTime,
+  });
 
-  collector.on('collect', async collectInteraction => {
-
+  collector.on('collect', async (collectInteraction) => {
     await collectInteraction.deferUpdate();
     if (!collectInteraction.isButton()) {
       return;
@@ -123,9 +155,11 @@ export async function sendPaginatedEmbeds(
       return;
     }
     // remove footer if enabled
-    if (options?.showPagePosition === undefined || options?.showPagePosition === true) {
-
-      const [ embed ] = message.embeds;
+    if (
+      options?.showPagePosition === undefined ||
+      options?.showPagePosition === true
+    ) {
+      const [embed] = message.embeds;
 
       if (embed) {
         embed.footer = null;
@@ -133,7 +167,7 @@ export async function sendPaginatedEmbeds(
         return;
       }
     }
-    
+
     await message.edit({ components: [] });
   });
 }
