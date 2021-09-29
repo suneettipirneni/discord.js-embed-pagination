@@ -1,6 +1,7 @@
 import {
   CommandInteraction,
   ContextMenuInteraction,
+  Interaction,
   InteractionButtonOptions,
   InteractionReplyOptions,
   Message,
@@ -57,6 +58,7 @@ const defaultTime = 1800000;
  */
 export async function sendPaginatedEmbeds(
   interaction:
+    | Message
     | CommandInteraction
     | MessageComponentInteraction
     | ContextMenuInteraction,
@@ -66,7 +68,7 @@ export async function sendPaginatedEmbeds(
   let currentPage = 0;
 
   // Precheck
-  if (interaction.replied) {
+  if (interaction instanceof Interaction && interaction.replied) {
     throw new Error('Cannot paginate when interaction is already replied to.');
   }
 
@@ -117,17 +119,27 @@ export async function sendPaginatedEmbeds(
   };
 
   const messageOptions = generateOptionsForPage(0);
-  const message = interaction.deferred
-    ? ((await interaction.followUp({
-        ...messageOptions,
-        fetchReply: true,
-        content: options?.content,
-      })) as Message)
-    : ((await interaction.reply({
-        ...messageOptions,
-        fetchReply: true,
-        content: options?.content,
-      })) as Message);
+
+  let message: Message;
+
+  if (interaction instanceof Interaction) {
+    message = interaction.deferred
+      ? ((await interaction.followUp({
+          ...messageOptions,
+          fetchReply: true,
+          content: options?.content,
+        })) as Message)
+      : ((await interaction.reply({
+          ...messageOptions,
+          fetchReply: true,
+          content: options?.content,
+        })) as Message);
+  } else {
+    message = await interaction.reply({
+      ...messageOptions,
+      content: options?.content,
+    });
+  }
 
   const collector = message.createMessageComponentCollector({
     componentType: 'BUTTON',
