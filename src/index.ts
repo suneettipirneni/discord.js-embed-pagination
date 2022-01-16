@@ -107,9 +107,11 @@ export async function sendPaginatedEmbeds(
     ]);
 
     if ((options?.showPagePosition ?? true) === true) {
-      currentEmbed.setFooter(
-        `${options?.pageLabel ?? 'Page'} ${currentPage + 1} of ${embeds.length}`
-      );
+      currentEmbed.setFooter({
+        text: `${options?.pageLabel ?? 'Page'} ${currentPage + 1} of ${
+          embeds.length
+        }`,
+      });
     }
 
     return {
