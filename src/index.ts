@@ -64,7 +64,7 @@ export async function sendPaginatedEmbeds(
     | ContextMenuInteraction,
   embeds: MessageEmbed[],
   options?: PageButtonOptions
-): Promise<void> {
+): Promise<Message | void> {
   let currentPage = 0;
 
   // Precheck
@@ -137,7 +137,7 @@ export async function sendPaginatedEmbeds(
           content: options?.content,
         })) as Message);
   } else {
-    message = await interaction.reply({
+    message = await interaction.channel.send({
       ...messageOptions,
       content: options?.content,
     });
@@ -184,4 +184,6 @@ export async function sendPaginatedEmbeds(
 
     await message.edit({ components: [] });
   });
+
+  return message;
 }
