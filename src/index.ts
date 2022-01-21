@@ -64,7 +64,7 @@ export async function sendPaginatedEmbeds(
     | ContextMenuInteraction,
   embeds: MessageEmbed[],
   options?: PageButtonOptions
-): Promise<Message | void> {
+): Promise<Message> {
   let currentPage = 0;
 
   // Precheck
