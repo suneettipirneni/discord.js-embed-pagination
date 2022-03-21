@@ -38,7 +38,7 @@ const titles = [
 ];
 
 async run(interaction: CommandInteraction) {
-    const embeds = new titles.map(title => new MessageEmbed.setTitle(title));
+    const embeds = new titles.map(title => new MessageEmbed().setTitle(title));
     await sendPaginatedEmbeds(interaction, embeds);
 }
 ```
